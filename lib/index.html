@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>likit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <style>
+      * {
+        font-size: 14px
+      }
+      .bar {
+        background: -webkit-linear-gradient(left, #02AAB0, #00CDAC);
+      }
+      .list-group-item {
+        border-radius: 0px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="list-group">
+      <li class="list-group-item bar" style="color:#fff">
+        <div class="col-2">
+          code
+        </div>
+        <div class="col-2">
+          method
+        </div>
+        <div class="col-2">
+          path
+        </div>
+        <div class="col-2">
+          time
+        </div>
+      </li>
+    </ul> 
+    <script src="https://npmcdn.com/event-source-polyfill@0.0.9"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script>
+    var es = new EventSource('/sse')
+    es.addEventListener('likit', function (e) {
+      
+      var data = e.data
+
+      data = JSON.parse(data)
+
+      var li = $('<li class="list-group-item request" style="font-weight:100"">')
+      
+      var conf = {
+        code: {
+          '200': '#2ecc71',
+          '300': '#3498db',
+          '401': '#e74c3c',
+          '404': '#e74c3c',
+          '500': '#e74c3c'
+        }
+      }
+
+      li.append(
+        $('<div class="col-2" style="border-right:1px dashed #000;color:'+ conf.code[data.code] +'">')
+        .text(data.code)
+        ,
+        $('<div class="col-2" style="border-right:1px dashed #000;">')
+        .text(data.method)
+        ,
+        $('<div class="col-2" style="border-right:1px dashed #000;" >')
+        .text(data.path)
+        ,
+        $('<div class="col-2">')
+        .text(data.time+' ms')
+      )
+      
+      if ($('.request').length == 15 ) $('.request').last().remove()
+      
+      $(li).insertAfter('.bar')
+    })
+    </script>
+  </body>
+</html>

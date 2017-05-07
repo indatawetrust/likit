@@ -1,0 +1,28 @@
+{
+  "name": "likit",
+  "version": "0.0.1",
+  "description": "Realtime log monitoring middleware for Koa, Koa2 and Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "realtime",
+    "log",
+    "monitor",
+    "middleware",
+    "koa",
+    "koa2",
+    "express",
+    "rest",
+    "api"
+  ],
+  "author": "indatawetrust",
+  "license": "MIT",
+  "dependencies": {
+    "eventemitter2": "^4.1.0",
+    "eventsource": "^1.0.0",
+    "sse": "0.0.6"
+  },
+  "devDependencies": {}
+}
