@@ -3,7 +3,8 @@ var app = require('koa')()
   , logger = require('koa-logger')
   , json = require('koa-json')
   , views = require('koa-views')
-  , onerror = require('koa-onerror');
+  , onerror = require('koa-onerror')
+  , likit = require('../../lib/likit')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -16,6 +17,11 @@ app.use(views('views', {
 app.use(require('koa-bodyparser')());
 app.use(json());
 app.use(logger());
+
+// likit
+app.use(likit({
+  app, 
+}))
 
 app.use(function *(next){
   var start = new Date;
