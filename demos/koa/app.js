@@ -4,7 +4,7 @@ var app = require('koa')()
   , json = require('koa-json')
   , views = require('koa-views')
   , onerror = require('koa-onerror')
-  , likit = require('../../lib/likit')
+  , likit = require('likit')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
