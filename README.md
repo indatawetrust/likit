@@ -8,21 +8,21 @@ npm i likit@latest -S
 ```
 
 ### koa
-```
+```js
 app.use(likit.koa({
   app,
 }))
 ```
 
 ### koa2
-```
+```js
 app.use(likit.koa2({
   app,
 }))
 ```
 
 ### express
-```
+```js
 app.use(likit.express({
   app,
 }))
