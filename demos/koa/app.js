@@ -4,7 +4,7 @@ var app = require('koa')()
   , json = require('koa-json')
   , views = require('koa-views')
   , onerror = require('koa-onerror')
-  , likit = require('../../lib/likit')
+  , likit = require('likit')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -20,9 +20,11 @@ app.use(logger());
 
 // likit
 app.use(likit({
-  app, 
+  app,
 }))
-
+app.on('error', function(err){
+  console.log(err)
+})
 app.use(function *(next){
   var start = new Date;
   yield next;
@@ -36,11 +38,7 @@ app.use(require('koa-static')(__dirname + '/public'));
 koa.use('/', index.routes(), index.allowedMethods());
 koa.use('/users', users.routes(), users.allowedMethods());
 
-// mount root routes  
+// mount root routes
 app.use(koa.routes());
-
-app.on('error', function(err, ctx){
-  logger.error('server error', err, ctx);
-});
 
 module.exports = app;

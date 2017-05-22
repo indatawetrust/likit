@@ -8,7 +8,7 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
 const logger = require('koa-logger');
-const likit = require('../../lib/likit');
+const likit = require('../../lib/koa2');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -21,7 +21,7 @@ app.use(require('koa-static')(__dirname + '/public'));
 
 // likit
 app.use(likit({
-  app, 
+  app,
 }))
 
 app.use(views(__dirname + '/views', {

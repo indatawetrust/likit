@@ -14,6 +14,36 @@
       .list-group-item {
         border-radius: 0px !important;
       }
+      .tab {
+        box-shadow: 0 0 5px #aaa
+      }
+      .key {
+        text-align: center;
+        padding: 4px;
+        color: #02AAB0
+      }
+      .value {
+        padding: 4px;
+        color: #00CDAC
+      }
+      .nav-link {
+        border-radius: 0px !important
+      }
+      #error {
+        padding: 4px;
+      }
+      a {
+        color: #aaa
+      }
+      a:active {
+        color: #000
+      }
+      a:hover {
+        color: #bbb
+      }
+      .list-group-item {
+        cursor: pointer
+      }
     </style>
   </head>
   <body>
@@ -32,49 +62,93 @@
           time
         </div>
       </li>
-    </ul> 
+    </ul>
     <script src="https://npmcdn.com/event-source-polyfill@0.0.9"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script>
-    var es = new EventSource('/sse')
-    es.addEventListener('likit', function (e) {
-      
-      var data = e.data
+    var es = new EventSource('/sse');
+es.addEventListener('likit', function(e) {
+  var data = e.data;
 
-      data = JSON.parse(data)
+  data = JSON.parse(data);
+  console.log(data);
+  var li = $('<li class="list-group-item request" style="font-weight:100"">');
 
-      var li = $('<li class="list-group-item request" style="font-weight:100"">')
-      
-      var conf = {
-        code: {
-          '200': '#2ecc71',
-          '300': '#3498db',
-          '401': '#e74c3c',
-          '404': '#e74c3c',
-          '500': '#e74c3c'
-        }
+  var conf = {
+    code: {
+      '200': '#2ecc71',
+      '300': '#3498db',
+      '401': '#e74c3c',
+      '404': '#e74c3c',
+      '500': '#e74c3c',
+    },
+  };
+
+  li.append(
+    $(
+      '<div class="col-2" style="border-right:1px dashed #000;color:' +
+        conf.code[data.code] +
+        '">',
+    ).text(data.code),
+    $('<div class="col-2" style="border-right:1px dashed #000;">').text(
+      data.method,
+    ),
+    $('<div class="col-2" style="border-right:1px dashed #000;" >').text(
+      data.path.length > 10 ? data.path.substr(0, 10) + '...' : data.path,
+    ),
+    $('<div class="col-2">').text(data.time + ' ms'),
+  );
+
+  li.attr('index', $('li').length);
+
+  var index = li.attr('index');
+
+  li.click(function() {
+    $('.tab').remove();
+
+    var tab = $(
+      "<div class='tab' id=\"tab" +
+        index +
+        '"><ul class="nav nav-tabs" role="tablist">\n  <li class="nav-item">\n    <a class="nav-link active" data-toggle="tab" href="#response" role="tab">response</a>\n  </li>\n  <li class="nav-item">\n    <a class="nav-link" data-toggle="tab" href="#request" role="tab">request</a>\n  </li>\n  <li class="nav-item">\n    <a class="nav-link" data-toggle="tab" href="#error" role="tab">error</a>\n  </li>\n</ul>\n\n<!-- Tab panes-->\n<div class="tab-content">\n  <div class="tab-pane active" id="response" role="tabpanel">...</div>\n  <div class="tab-pane" id="request" role="tabpanel">...</div>\n  <div class="tab-pane" id="error" role="tabpanel"></div>\n</div>',
+    );
+
+    if (!$('#tab' + index).length) $(this).after(tab);
+    else $('#tab' + index).toggle();
+
+    for (var i in {response: '', request: ''}) {
+      var el = $("<div class='row tabrow'></div>");
+
+      for (var key in data[i]) {
+        el.append(
+          $(
+            "<div class='col-2 key'>" +
+              key +
+              '</div> <div class="col-10 value">' +
+              (typeof data[i][key] === 'object'
+                ? JSON.stringify(data[i][key])
+                : data[i][key]) +
+              '</div>',
+          ),
+        );
       }
 
-      li.append(
-        $('<div class="col-2" style="border-right:1px dashed #000;color:'+ conf.code[data.code] +'">')
-        .text(data.code)
-        ,
-        $('<div class="col-2" style="border-right:1px dashed #000;">')
-        .text(data.method)
-        ,
-        $('<div class="col-2" style="border-right:1px dashed #000;" >')
-        .text(data.path.length > 10 ? (data.path.substr(0, 10) + '...') : data.path)
-        ,
-        $('<div class="col-2">')
-        .text(data.time+' ms')
-      )
-      
-      if ($('.request').length == 15 ) $('.request').last().remove()
-      
-      $(li).insertAfter('.bar')
-    })
-    </script>
+      $(tab).find('#' + i).html(el);
+    }
+
+    $(tab)
+      .find('#error')
+      .html(
+        data.error ||
+          "<div class='row'></div>",
+      );
+  });
+
+  if ($('.request').length == 15) $('.request').last().remove();
+
+  $(li).insertAfter('.bar');
+});
+</script>
   </body>
 </html>
