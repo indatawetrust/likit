@@ -11,6 +11,7 @@ npm i likit@latest -S
 ```js
 app.use(likit.koa({
   app,
+  port: 3001 // default
 }))
 ```
 
@@ -18,6 +19,7 @@ app.use(likit.koa({
 ```js
 app.use(likit.koa2({
   app,
+  port: 3001 // default
 }))
 ```
 
@@ -25,5 +27,6 @@ app.use(likit.koa2({
 ```js
 app.use(likit.express({
   app,
+  port: 3001 // default
 }))
 ```
