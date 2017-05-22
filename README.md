@@ -1,21 +1,29 @@
 # likit
 Realtime log monitoring middleware for Koa, Koa2 and Express
 
-### koa2
+### install
 
 ```
-npm i likit@koa2 -S
+npm i likit@latest -S
 ```
 
 ### koa
-
 ```
-npm i likit@koa -S
+app.use(likit.koa({
+  app,
+}))
+```
+
+### koa2
+```
+app.use(likit.koa2({
+  app,
+}))
 ```
 
 ### express
-
 ```
-npm i likit@express -S
+app.use(likit.express({
+  app,
+}))
 ```
-
