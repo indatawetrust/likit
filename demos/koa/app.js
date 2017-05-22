@@ -19,7 +19,7 @@ app.use(json());
 app.use(logger());
 
 // likit
-app.use(likit({
+app.use(likit.koa({
   app,
 }))
 app.on('error', function(err){

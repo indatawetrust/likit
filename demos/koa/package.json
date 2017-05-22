@@ -17,6 +17,6 @@
     "koa-router": "^5.3.0",
     "koa-static": "^1.5.2",
     "koa-views": "^3.1.0",
-    "likit": "0.0.5"
+    "likit": "^0.1.1"
   }
 }

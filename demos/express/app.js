@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var likit = require('../../lib/express');
+var likit = require('likit');
 
 var index = require('./routes/index');
 
@@ -25,7 +25,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 // likit
-app.use(likit({
+app.use(likit.express({
   app,
 }))
 // error handler
