@@ -1,6 +1,10 @@
 {
   "name": "likit",
+<<<<<<< HEAD
   "version": "0.1.1",
+=======
+  "version": "0.0.9",
+>>>>>>> master
   "description": "Realtime log monitoring middleware for Koa, Koa2 and Express",
   "main": "index.js",
   "scripts": {
