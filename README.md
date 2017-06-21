@@ -1,5 +1,7 @@
 # likit
-Realtime log monitoring middleware for Koa, Koa2 and Express
+Realtime request/response monitoring middleware for Koa, Koa2 and Express
+
+![img](https://pbs.twimg.com/media/DAd9YorXcAAOXcX.jpg)
 
 ### install
 
@@ -11,6 +13,7 @@ npm i likit@latest -S
 ```js
 app.use(likit.koa({
   app,
+  port: 3001 // default
 }))
 ```
 
@@ -18,6 +21,7 @@ app.use(likit.koa({
 ```js
 app.use(likit.koa2({
   app,
+  port: 3001 // default
 }))
 ```
 
@@ -25,5 +29,6 @@ app.use(likit.koa2({
 ```js
 app.use(likit.express({
   app,
+  port: 3001 // default
 }))
 ```
