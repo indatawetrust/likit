@@ -1,6 +1,6 @@
 {
   "name": "likit",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Realtime request/response monitoring middleware for Koa, Koa2 and Express",
   "main": "index.js",
   "scripts": {
