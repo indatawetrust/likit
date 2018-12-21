@@ -1,7 +1,7 @@
 # likit
 Realtime request/response monitoring middleware for Koa, Koa2 and Express
 
-![img](https://pbs.twimg.com/media/DAd9YorXcAAOXcX.jpg)
+![img](https://i.ibb.co/qBpJv96/screencapture-localhost-3001-2018-12-21-15-59-47.png)
 
 Added basic auth support.
 
